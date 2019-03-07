@@ -56,7 +56,7 @@ module Apartment
       end
 
       def drop_command(conn, tenant)
-        conn.execute(%{DROP SCHEMA "#{tenant}" CASCADE})
+        conn.execute(%{DROP SCHEMA IF EXISTS "#{tenant}" CASCADE})
       end
 
       #   Set schema search path to new schema
