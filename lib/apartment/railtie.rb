@@ -27,7 +27,7 @@ module Apartment
     #   See the middleware/console declarations below to help with this. Hope to fix that soon.
     #
     config.to_prepare do
-      next if ARGV.any? { |arg| arg =~ /\Aassets:(?:precompile|clean)\z/ }
+      next if ARGV.any? { |arg| Apartment.databaseless_tasks.include? arg }
 
       begin
         Apartment.connection_class.connection_pool.with_connection do

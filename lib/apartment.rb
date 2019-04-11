@@ -11,7 +11,7 @@ module Apartment
     extend Forwardable
 
     ACCESSOR_METHODS  = [:use_schemas, :use_sql, :seed_after_create, :prepend_environment, :append_environment, :with_multi_server_setup]
-    WRITER_METHODS    = [:tenant_names, :database_schema_file, :excluded_models, :default_schema, :persistent_schemas, :connection_class, :tld_length, :db_migrate_tenants, :seed_data_file, :parallel_migration_threads, :pg_excluded_names]
+    WRITER_METHODS    = [:tenant_names, :database_schema_file, :excluded_models, :default_schema, :persistent_schemas, :connection_class, :tld_length, :db_migrate_tenants, :seed_data_file, :parallel_migration_threads, :pg_excluded_names, :databaseless_tasks]
 
     attr_accessor(*ACCESSOR_METHODS)
     attr_writer(*WRITER_METHODS)
@@ -80,6 +80,11 @@ module Apartment
 
     def pg_excluded_names
       @pg_excluded_names || []
+    end
+
+    def databaseless_tasks
+      databaseless_tasks = @databaseless_tasks || []
+      databaseless_tasks + ['assets:precompile', 'assets:clean']
     end
 
     # Reset all the config for Apartment
